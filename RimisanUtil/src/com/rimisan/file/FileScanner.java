@@ -15,7 +15,7 @@ public class FileScanner {
     private IFileScannerEventListener eventListener = null;
     private File rootDir = null;
     private IFileFilter filter;
-
+    private FileScannerOptions options;
     public FileScanner(IFileScannerEventListener eventListener){
         setEventListener(eventListener);
     }
@@ -30,7 +30,10 @@ public class FileScanner {
         setEventListener(eventListener);
         setFilter(filter);
     }
-
+    public void setOptions(FileScannerOptions pOpt)
+    {
+        options = pOpt;
+    }
     public void setEventListener(IFileScannerEventListener fEvtL){
         this.eventListener = fEvtL;
     }

@@ -46,18 +46,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Glauco
  */
-public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileScannerEventListener{
+public class JAplFEFIT extends javax.swing.JFrame implements Runnable, IFileScannerEventListener{
     StringBuilder sb = null;
-    JApplet me = this;
+    JFrame me = this;
     javax.script.ScriptEngineManager sce = new ScriptEngineManager();
     ScriptEngine se = sce.getEngineByName("javascript");
 
     public static void main(String[] args) {
       Runnable r = new Runnable() {
          public void run() {
-            JFrame f = new JFrame("Calculator");
+            JFrame f = new JAplFEFIT();//new JFrame("FEFIT");
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.add(new JAplFEFIT().jPanelPrincipal);
+            //f.add();
             f.pack();
             f.setLocationByPlatform(true);
             f.setVisible(true);
@@ -117,12 +117,19 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         jRadioButtonFiltroJavascript = new javax.swing.JRadioButton();
         jRadioButtonFiltroRegExp = new javax.swing.JRadioButton();
         jCheckBoxCoincidirCaminhoCompleto = new javax.swing.JCheckBox();
+        jCheckBoxSomenteDiretorios = new javax.swing.JCheckBox();
         cmdEscolheDiretorio1 = new javax.swing.JButton();
         cmdEscolheDiretorio2 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtCriterio = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAcao = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         cmdEscolheDiretorio.setText("...");
         cmdEscolheDiretorio.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +211,7 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jlbQtdOcorrencias, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlbQtdArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,14 +221,15 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jlbQtdPastas)
-                    .addComponent(jLabel8)
-                    .addComponent(jlbQtdOcorrencias)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7)
-                        .addComponent(jlbQtdArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jlbQtdArquivos, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jlbQtdPastas)
+                        .addComponent(jLabel8)
+                        .addComponent(jlbQtdOcorrencias)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -264,6 +272,14 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         jCheckBoxCoincidirCaminhoCompleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxCoincidirCaminhoCompletoActionPerformed(evt);
+            }
+        });
+
+        jCheckBoxSomenteDiretorios.setText("Percorrer somente diretórios.");
+        jCheckBoxSomenteDiretorios.setToolTipText("Quando desmarcado o critério é avaliado somente sobre nome do arquivo.");
+        jCheckBoxSomenteDiretorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSomenteDiretoriosActionPerformed(evt);
             }
         });
 
@@ -312,13 +328,19 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         jPanelPrincipalLayout.setHorizontalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 494, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 494, Short.MAX_VALUE)
+                                .addComponent(jButton1))))
+                    .addGroup(jPanelPrincipalLayout.createSequentialGroup()
+                        .addGap(501, 501, 501)
+                        .addComponent(jCheckBoxSomenteDiretorios)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelPrincipalLayout.createSequentialGroup()
@@ -362,7 +384,9 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         jPanelPrincipalLayout.setVerticalGroup(
             jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPrincipalLayout.createSequentialGroup()
-                .addGap(0, 552, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
+                .addComponent(jCheckBoxSomenteDiretorios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 467, Short.MAX_VALUE)
                 .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
@@ -387,7 +411,7 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
                     .addGap(1, 1, 1)
                     .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(cmdEscolheDiretorio1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE))
                     .addGap(6, 6, 6)
                     .addGroup(jPanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
@@ -402,11 +426,30 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
                     .addGap(9, 9, 9)
                     .addComponent(jLabel5)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                     .addGap(100, 100, 100)))
         );
 
         jLabel4.getAccessibleContext().setAccessibleDescription("");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("jMenuItem1");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("jMenuItem1");
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("jMenu2");
+
+        jMenuItem3.setText("jMenuItem1");
+        jMenu2.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -420,53 +463,65 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdEscolheDiretorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorioActionPerformed
-        EscolherPasta();
-    }//GEN-LAST:event_cmdEscolheDiretorioActionPerformed
-
-    void EscolherPasta()
-    {
-        JFileChooser jfc = new JFileChooser();
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if(JFileChooser.APPROVE_OPTION == jfc.showOpenDialog(this)){
-            txtDiretorioRaiz.setText(jfc.getSelectedFile().getPath());
+    private void txtAcaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAcaoMouseClicked
+        if(isRightDoubleClick(evt)){
+            LancarEditorDeAcao();
         }
-    }
-    
-    private void cmdIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdIniciarActionPerformed
-        SwingWorker sw = new SwingWorker() {
+    }//GEN-LAST:event_txtAcaoMouseClicked
 
-            @Override
-            protected Object doInBackground() throws Exception {
-                IFileFilter filtro = null;
-                if(jRadioButtonFiltroRegExp.isSelected())
-                    filtro = new RegExpNameFileFilter(txtCriterio.getText());
-                else if(jRadioButtonFiltroJavascript.isSelected())
-                    filtro = new JavascriptExposedFileFilter(txtCriterio.getText());
+    private void txtCriterioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCriterioMouseClicked
+        if(isRightDoubleClick(evt)){
+            LancarEditorDeCriterio();
+        }
+    }//GEN-LAST:event_txtCriterioMouseClicked
 
-                FileScanner fs = new FileScanner(new File(txtDiretorioRaiz.getText()), (IFileScannerEventListener)me,filtro);
-                
-                sb = new StringBuilder();
-                jlbQtdArquivos.setText("0");
-                jlbQtdOcorrencias.setText("0");
-                jlbQtdPastas.setText("0");
-                
-                try{
-                    fs.startScan();
-                }catch(FileScanner.RootDirNotSetException e){
-                    JOptionPane.showMessageDialog(null, e.toString());
-                }catch(FileScanner.RootDirNotValidException ee){
-                    JOptionPane.showMessageDialog(null, ee.toString());
-                }
-                
-                jEditorPaneResultado.setText( "<html><body>" + sb.toString() + "</body></html>");
-                return null;
-            }
+    private void cmdEscolheDiretorio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorio2ActionPerformed
+        LancarEditorDeAcao();
+    }//GEN-LAST:event_cmdEscolheDiretorio2ActionPerformed
 
-        };
-        sw.execute();
+    private void cmdEscolheDiretorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorio1ActionPerformed
+        LancarEditorDeCriterio();
+    }//GEN-LAST:event_cmdEscolheDiretorio1ActionPerformed
 
-    }//GEN-LAST:event_cmdIniciarActionPerformed
+    private void jCheckBoxSomenteDiretoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSomenteDiretoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxSomenteDiretoriosActionPerformed
+
+    private void jCheckBoxCoincidirCaminhoCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxCoincidirCaminhoCompletoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxCoincidirCaminhoCompletoActionPerformed
+
+    private void jRadioButtonFiltroRegExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFiltroRegExpActionPerformed
+        if(txtCriterio.getText().equals(FEFITApp.CRITERIO_PADRAO_JAVASCRIPT))
+        {
+            txtCriterio.setText(FEFITApp.CRITERIO_PADRAO_REGEX);
+        }
+        jCheckBoxCoincidirCaminhoCompleto.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonFiltroRegExpActionPerformed
+
+    private void jRadioButtonFiltroJavascriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFiltroJavascriptActionPerformed
+        if(txtCriterio.getText().equals(FEFITApp.CRITERIO_PADRAO_REGEX))
+        {
+            txtCriterio.setText(FEFITApp.CRITERIO_PADRAO_JAVASCRIPT);
+
+        }
+
+        jCheckBoxCoincidirCaminhoCompleto.setVisible(false);
+    }//GEN-LAST:event_jRadioButtonFiltroJavascriptActionPerformed
+
+    private void jRadioButtonAcaoJavascriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAcaoJavascriptActionPerformed
+        if(txtAcao.getText().equals(FEFITApp.ACAO_PADRAO_SUBSTITUICAO))
+        {
+            txtAcao.setText(FEFITApp.ACAO_PADRAO_JAVASCRIPT);
+        }
+    }//GEN-LAST:event_jRadioButtonAcaoJavascriptActionPerformed
+
+    private void jRadioButtonAcaoSubstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAcaoSubstActionPerformed
+        if(txtAcao.getText().equals(FEFITApp.ACAO_PADRAO_JAVASCRIPT))
+        {
+            txtAcao.setText(FEFITApp.ACAO_PADRAO_SUBSTITUICAO);
+        }
+    }//GEN-LAST:event_jRadioButtonAcaoSubstActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jEditorPaneResultado.setText("");
@@ -490,80 +545,69 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jRadioButtonAcaoSubstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAcaoSubstActionPerformed
-        if(txtAcao.getText().equals(FEFITApp.ACAO_PADRAO_JAVASCRIPT))
-        {
-            txtAcao.setText(FEFITApp.ACAO_PADRAO_SUBSTITUICAO);
+    private void cmdIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdIniciarActionPerformed
+        SwingWorker sw = new SwingWorker() {
+
+            @Override
+            protected Object doInBackground() throws Exception {
+                IFileFilter filtro = null;
+                if(jRadioButtonFiltroRegExp.isSelected())
+                filtro = new RegExpNameFileFilter(txtCriterio.getText());
+                else if(jRadioButtonFiltroJavascript.isSelected())
+                filtro = new JavascriptExposedFileFilter(txtCriterio.getText());
+
+                FileScanner fs = new FileScanner(new File(txtDiretorioRaiz.getText()), (IFileScannerEventListener)me,filtro);
+
+                sb = new StringBuilder();
+                jlbQtdArquivos.setText("0");
+                jlbQtdOcorrencias.setText("0");
+                jlbQtdPastas.setText("0");
+
+                try{
+                    fs.startScan();
+                }catch(FileScanner.RootDirNotSetException e){
+                    JOptionPane.showMessageDialog(null, e.toString());
+                }catch(FileScanner.RootDirNotValidException ee){
+                    JOptionPane.showMessageDialog(null, ee.toString());
+                }
+
+                jEditorPaneResultado.setText( "<html><body>" + sb.toString() + "</body></html>");
+                return null;
+            }
+
+        };
+        sw.execute();
+    }//GEN-LAST:event_cmdIniciarActionPerformed
+
+    private void txtDiretorioRaizMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDiretorioRaizMouseClicked
+        if(isRightDoubleClick(evt))
+        EscolherPasta();
+    }//GEN-LAST:event_txtDiretorioRaizMouseClicked
+
+    private void cmdEscolheDiretorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorioActionPerformed
+        EscolherPasta();
+    }//GEN-LAST:event_cmdEscolheDiretorioActionPerformed
+
+    void EscolherPasta()
+    {
+        JFileChooser jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(JFileChooser.APPROVE_OPTION == jfc.showOpenDialog(this)){
+            txtDiretorioRaiz.setText(jfc.getSelectedFile().getPath());
         }
-}//GEN-LAST:event_jRadioButtonAcaoSubstActionPerformed
-
-    private void jRadioButtonAcaoJavascriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAcaoJavascriptActionPerformed
-        if(txtAcao.getText().equals(FEFITApp.ACAO_PADRAO_SUBSTITUICAO))
-        {
-            txtAcao.setText(FEFITApp.ACAO_PADRAO_JAVASCRIPT);
-        }
-
-}//GEN-LAST:event_jRadioButtonAcaoJavascriptActionPerformed
-
-    private void jRadioButtonFiltroJavascriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFiltroJavascriptActionPerformed
-        if(txtCriterio.getText().equals(FEFITApp.CRITERIO_PADRAO_REGEX))
-        {
-            txtCriterio.setText(FEFITApp.CRITERIO_PADRAO_JAVASCRIPT);
-            
-        }
-       
-        jCheckBoxCoincidirCaminhoCompleto.setVisible(false);
-    }//GEN-LAST:event_jRadioButtonFiltroJavascriptActionPerformed
-
-    private void jRadioButtonFiltroRegExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFiltroRegExpActionPerformed
-        if(txtCriterio.getText().equals(FEFITApp.CRITERIO_PADRAO_JAVASCRIPT))
-        {
-            txtCriterio.setText(FEFITApp.CRITERIO_PADRAO_REGEX);
-        }
-        jCheckBoxCoincidirCaminhoCompleto.setVisible(true);
-    }//GEN-LAST:event_jRadioButtonFiltroRegExpActionPerformed
-
-    private void jCheckBoxCoincidirCaminhoCompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxCoincidirCaminhoCompletoActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jCheckBoxCoincidirCaminhoCompletoActionPerformed
-
-    private void cmdEscolheDiretorio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorio1ActionPerformed
-        LancarEditorDeCriterio();
-    }//GEN-LAST:event_cmdEscolheDiretorio1ActionPerformed
-
+    }
+    
     void LancarEditorDeCriterio(){
         if(jRadioButtonFiltroRegExp.isSelected())
             new PopoutSimpleEditor(txtCriterio, getParentFrame(me)).setVisible(true);
         else
             (new PopoutAcaoJavascriptEditor(txtCriterio, getParentFrame(me))).setVisible(true);
-    }
-    private void cmdEscolheDiretorio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEscolheDiretorio2ActionPerformed
-        LancarEditorDeAcao();
-    }//GEN-LAST:event_cmdEscolheDiretorio2ActionPerformed
-    void LancarEditorDeAcao(){
+    }    void LancarEditorDeAcao(){
         if(jRadioButtonAcaoSubst.isSelected())
             (new PopoutAcaoSubstEditor(txtAcao, getParentFrame(me))).setVisible(true);
         else if(jRadioButtonAcaoJavascript.isSelected())
             (new PopoutAcaoJavascriptEditor(txtAcao, getParentFrame(me))).setVisible(true);
-    }
-    private void txtDiretorioRaizMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDiretorioRaizMouseClicked
-        if(isRightDoubleClick(evt))
-            EscolherPasta();
-    }//GEN-LAST:event_txtDiretorioRaizMouseClicked
-
-    private void txtCriterioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCriterioMouseClicked
-        if(isRightDoubleClick(evt)){
-            LancarEditorDeCriterio();
-        }
-    }//GEN-LAST:event_txtCriterioMouseClicked
-
-    private void txtAcaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAcaoMouseClicked
-        if(isRightDoubleClick(evt)){
-            LancarEditorDeAcao();
-        }
-    }//GEN-LAST:event_txtAcaoMouseClicked
-    boolean isRightDoubleClick(java.awt.event.MouseEvent evt)
+    }    boolean isRightDoubleClick(java.awt.event.MouseEvent evt)
     {
         return evt.getClickCount() == 2 && SwingUtilities.isRightMouseButton(evt);
     }
@@ -598,6 +642,7 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBoxCoincidirCaminhoCompleto;
+    private javax.swing.JCheckBox jCheckBoxSomenteDiretorios;
     private javax.swing.JEditorPane jEditorPaneResultado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -606,6 +651,12 @@ public class JAplFEFIT extends javax.swing.JApplet implements Runnable, IFileSca
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JRadioButton jRadioButtonAcaoJavascript;
